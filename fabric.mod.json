@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "id": "buildertools",
+  "version": "0.1.0",
+  "name": "Builder Tools",
+  "description": "Area clear/fill, brush, undo/redo, layer lock untuk builder survival.",
+  "authors": ["Maharaja"],
+  "environment": "*",
+  "entrypoints": { "main": ["id.builder.tools.BuilderTools"] },
+  "depends": { "fabricloader": ">=0.19.5", "minecraft": "~26.3", "fabric-api": "*" }
+}
