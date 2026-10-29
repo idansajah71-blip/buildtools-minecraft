@@ -142,8 +142,8 @@ public final class Engine {
                 if (item == Items.AIR || !takeOne(p, item)) return Result.NO_MATERIAL;
             }
             if (!cur.isAir() && !(cur.getBlock() instanceof LiquidBlock)) {
-                if (j.exact) give(p, new ItemStack(cur.getBlock().asItem()));
-                else for (ItemStack d : Block.getDrops(cur, level, pos, null, p, p.getMainHandItem())) give(p, d);
+                if (j.exact) give(level, p, new ItemStack(cur.getBlock().asItem()));
+                else for (ItemStack d : Block.getDrops(cur, level, pos, null, p, p.getMainHandItem())) give(level, p, d);
             }
         }
         level.setBlock(pos, target, 3);
@@ -151,9 +151,11 @@ public final class Engine {
         return Result.DONE;
     }
 
-    private static void give(ServerPlayer p, ItemStack stack) {
+    private static void give(ServerLevel level, ServerPlayer p, ItemStack stack) {
         if (stack.isEmpty()) return;
-        if (!p.getInventory().add(stack) && !stack.isEmpty()) p.drop(stack, false);
+        if (!p.getInventory().add(stack) && !stack.isEmpty()) {
+            level.addFreshEntity(new net.minecraft.world.entity.item.ItemEntity(level, p.getX(), p.getY(), p.getZ(), stack));
+        }
     }
 
     public static boolean takeOne(ServerPlayer p, Item item) {
